@@ -10,29 +10,33 @@ class Analizador:
         # | es el o
         # * es el cero o mas
         # + es el uno o mas
-        # a, b, c es lenguaje
+        # a, b, c es lenguaj
         
-        for caracter in expresion:
-            if caracter in ['(', ')', '|', '*', '+']:
-                if expresion.index(caracter)+1 <= len(expresion)-1:    
-                    if caracter == '|':
-                        if expresion[0] == '|' == 0 or expresion[-1] == '|':
-                            return False
-                        if expresion[expresion.index(caracter)+1] == ')':
-                            return False
-                    if caracter == '(':
-                        if expresion[expresion.index(caracter)+1] == ')':
-                            return False
-                    if caracter == '*':
-                        if expresion[expresion.index(caracter)+1] == '+':
-                            return False
-                        if expresion[expresion.index(caracter)+1] == '*':
-                            return False
-                    if caracter == '+':   
-                        if expresion[expresion.index(caracter)+1] == '*':
-                            return False
-                        if expresion[expresion.index(caracter)+1] == '+':
-                            return False
+        for posicion in range(len(expresion)):
+            if expresion[posicion] in ['(', ')', '|', '*', '+']:
+                if expresion[posicion] == '|':
+                    if posicion == 0 or posicion == len(expresion)-1:
+                        return False
+                    if posicion+1 < len(expresion) and expresion[posicion+1] == ')':
+                        return False
+                if expresion[posicion] == '(':
+                    if posicion+1 < len(expresion) and expresion[posicion+1] == ')':
+                        return False
+                if expresion[posicion] == '*':
+                    if posicion+1 < len(expresion) and expresion[posicion+1] == '+':
+                        return False
+                    if posicion+1 < len(expresion) and expresion[posicion+1] == '*':
+                        return False
+                    if posicion == 0 or expresion[posicion-1] != ')':
+                        return False
+                if expresion[posicion] == '+':
+                    if posicion+1 < len(expresion) and expresion[posicion+1] == '*':
+                        return False
+                    if posicion+1 < len(expresion) and expresion[posicion+1] == '+':
+                        return False
+                    if posicion == 0 or expresion[posicion-1] != ')':
+                        return False
+        
         
         parentesis_abiertos = 0
         parentesis_cerrados = 0
