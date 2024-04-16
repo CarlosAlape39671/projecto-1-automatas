@@ -1,18 +1,11 @@
 class Analizador:
 
-    def analizar_expresion(self, expresion: str):
+    def analizar_expresion(self, expresion: str) -> bool:
         # Limpiar la expresión regular
         expresion_limpia = expresion.replace(' ', '')
-
-        # Validar si la expresión regular es válida
-        if not self.validar_expresion(expresion_limpia):
-            return False
-        return True
+        return self.validar_expresion(expresion_limpia)
 
     def validar_expresion(self, expresion: str) -> bool:
-        # Verificar si la expresión regular es válida
-        # Esto es una implementación básica y puede necesitar ajustes según los requisitos exactos
-        
         # ()
         # | es el o
         # * es el cero o mas
@@ -23,7 +16,7 @@ class Analizador:
             if caracter in ['(', ')', '|', '*', '+']:
                 if expresion.index(caracter)+1 <= len(expresion)-1:    
                     if caracter == '|':
-                        if expresion.index(caracter) == 0:
+                        if expresion[0] == '|' == 0 or expresion[-1] == '|':
                             return False
                         if expresion[expresion.index(caracter)+1] == ')':
                             return False
@@ -40,9 +33,6 @@ class Analizador:
                             return False
                         if expresion[expresion.index(caracter)+1] == '+':
                             return False
-                else:
-                    if caracter == '|':
-                        return False
         
         parentesis_abiertos = 0
         parentesis_cerrados = 0
